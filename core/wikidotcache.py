@@ -89,15 +89,10 @@ def cache_refresh(): #calls itself automatically once called for the first time
 						localtaglist[page] = ""
 					localratinglist[page] = item[page]["rating"]
 					if overwritecache[page.lower()]:
-						localauthorlist[page] = localauthorlist[page]+":rewrite:"+overwritecache[page.lower()]
+						localauthorlist[page] = localauthorlist[page]+overwritecache[page.lower()]
 						if ":override:" in localauthorlist[page]:
-							bothauths = localauthorlist[page].split(":rewrite:")
-							newauth = bothauths[1]
-							localauthorlist[page] = newauth[10:]
-						else if ":coauthor:" in localauthorlist[page]:
-							bothauths = localauthorlist[page].split(":rewrite:")
-							newauth = bothauths[1]
-							localauthorlist[page] = newauth[10:]
+							bothauths = localauthorlist[page].split(":override:")
+							localauthorlist[page] = bothauths[1]
 				except KeyError:
 				 pass
 	__builtin__.authorlist = localauthorlist
@@ -237,15 +232,10 @@ def cache_refresh(): #calls itself automatically once called for the first time
 				localtaglist[page] = ""
 			localratinglist[page] = cache[page]["rating"]
 			if overwritecache[page.lower()]:
-				localauthorlist[page] = localauthorlist[page]+":rewrite:"+overwritecache[page.lower()]
+				localauthorlist[page] = localauthorlist[page]+overwritecache[page.lower()]
 				if ":override:" in localauthorlist[page]:
-					bothauths = localauthorlist[page].split(":rewrite:")
-					newauth = bothauths[1]
-					localauthorlist[page] = newauth[10:]
-				else if ":coauthor:" in localauthorlist[page]:
-					bothauths = localauthorlist[page].split(":rewrite:")
-					newauth = bothauths[1]
-					localauthorlist[page] = newauth[10:]
+					bothauths = localauthorlist[page].split(":override:")
+					localauthorlist[page] = bothauths[1]
 		except KeyError:
 			pass 
 		newpagecache.append(x)
