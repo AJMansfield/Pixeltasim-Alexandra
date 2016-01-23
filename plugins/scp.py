@@ -30,6 +30,21 @@ def unused(inp):
 			else:
 				return "The first unused page found is SCP-"+x+" - http://www.scp-wiki.net/scp-"+x
 
+def makeauthorstring(author):
+	author = author or "unknown"
+	if ":rewrite:" in author:
+		bothauths = authorlist[page].split(":rewrite:")
+		orgauth = bothauths[0]
+		newauth = bothauths[1]
+		return "Originally written by "+orgauth +", rewritten by "+newauth
+	else if ":coauthor:" in author:
+		bothauths = authorlist[page].split(":coauthor:")
+		orgauth = bothauths[0]
+		newauth = bothauths[1]
+		return "Written by "+orgauth+" and "+newauth
+	else:
+		return "Written by "+author
+	
 @hook.regex("scp-")
 def scpregex(match):
 	if ' ' not in match.string:
@@ -45,14 +60,7 @@ def scpregex(match):
 					ratesign = "+" #adds + or minus sign in front of rating
 				ratestring = "Rating:"+ratesign+str(rating)+"" 
 				author = authorlist[page]
-				if author == "":
-					author = "unknown"
-				authorstring = "Written by "+author
-				if ":rewrite:" in author:
-					bothauths = authorlist[page].split(":rewrite:")
-					orgauth = bothauths[0]
-					newauth = bothauths[1]
-					authorstring = "Originally written by "+orgauth +", rewritten by "+newauth
+				authorstring = makeauthorstring(author)
 				title = titlelist[page]
 				scptitle = scptitles[page]
 				sepstring = ", "
@@ -110,14 +118,7 @@ def scpregex(match):
 						ratesign = "+" #adds + or minus sign in front of rating
 					ratestring = "Rating:"+ratesign+str(rating)+"" 
 					author = authorlist[page]
-					if author == "":
-						author = "unknown"
-					authorstring = "Written by "+author
-					if ":rewrite:" in author:
-						bothauths = authorlist[page].split(":rewrite:")
-						orgauth = bothauths[0]
-						newauth = bothauths[1]
-						authorstring = "Originally written by "+orgauth +", rewritten by "+newauth
+					authorstring = makeauthorstring(author)
 					title = titlelist[page]
 					scptitle = scptitles[page]
 					sepstring = ", "
@@ -134,9 +135,7 @@ def scpregex(match):
 							ratesign = "+" #adds + or minus sign in front of rating
 						ratestring = "Rating:"+ratesign+str(rating)+"" 
 						author = api.get_page_item(page,"created_by")
-						if author == "":
-							author = "unknown"
-						authorstring = "Written by "+author
+						authorstring = makeauthorstring(author)
 						title = api.get_page_item(page,"title")
 						sepstring = ", "
 						link = "http://scp-wiki.net/"+page.lower() 
@@ -150,9 +149,7 @@ def scpregex(match):
 						ratesign = "+" #adds + or minus sign in front of rating
 					ratestring = "Rating:"+ratesign+str(rating)+"" 
 					author = api.get_page_item(page,"created_by")
-					if author == "":
-						author = "unknown"
-					authorstring = "Written by "+author
+					authorstring = makeauthorstring(author)
 					title = api.get_page_item(page,"title")
 					sepstring = ", "
 					link = "http://scp-wiki.net/"+page.lower() 
