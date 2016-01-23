@@ -94,6 +94,10 @@ def cache_refresh(): #calls itself automatically once called for the first time
 							bothauths = localauthorlist[page].split(":rewrite:")
 							newauth = bothauths[1]
 							localauthorlist[page] = newauth[10:]
+						else if ":coauthor:" in localauthorlist[page]:
+							bothauths = localauthorlist[page].split(":rewrite:")
+							newauth = bothauths[1]
+							localauthorlist[page] = newauth[10:]
 				except KeyError:
 				 pass
 	__builtin__.authorlist = localauthorlist
@@ -235,6 +239,10 @@ def cache_refresh(): #calls itself automatically once called for the first time
 			if overwritecache[page.lower()]:
 				localauthorlist[page] = localauthorlist[page]+":rewrite:"+overwritecache[page.lower()]
 				if ":override:" in localauthorlist[page]:
+					bothauths = localauthorlist[page].split(":rewrite:")
+					newauth = bothauths[1]
+					localauthorlist[page] = newauth[10:]
+				else if ":coauthor:" in localauthorlist[page]:
 					bothauths = localauthorlist[page].split(":rewrite:")
 					newauth = bothauths[1]
 					localauthorlist[page] = newauth[10:]
